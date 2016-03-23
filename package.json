@@ -1,0 +1,28 @@
+{
+	"name": "performance-nodejs",
+	"description": "get nodejs performance, eg: heap statistics, event loop delay",
+	"version": "0.0.1",
+	"author": "Tree Xie <vicansocanbico@gmail.com>",
+	"keywords": [
+		"performance",
+		"heap",
+		"heap statistics",
+		"event loop"
+	],
+	"scripts": {
+		"test": "node ./node_modules/.bin/eslint ./lib/*.js && node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./test/*.js --"
+	},
+	"repository": {
+    "type": "git",
+    "url": "https://github.com/vicanso/performance-nodejs.git"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^2.3.0",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5"
+  },
+	"license": "MIT"
+}
