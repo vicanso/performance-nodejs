@@ -1,6 +1,6 @@
 # performance-nodejs
-
-	Get nodejs performance, eg: heap statistics, event loop delay
+  
+  Get nodejs performance, eg: heap statistics, event loop delay
 
 ## Installation
 
@@ -9,7 +9,8 @@ $ npm install performance-nodejs
 ```
 
 ## Description
-	The `performance()` function get node.js performance (include event loop and heap statistics). 
+
+  The `performance()` function get node.js performance (include event loop and heap statistics). 
 
 ```
 const timer = performance(fn, interval);
