@@ -1,7 +1,7 @@
 {
 	"name": "performance-nodejs",
 	"description": "get nodejs performance, eg: heap statistics, event loop delay",
-	"version": "0.0.1",
+	"version": "0.0.3",
 	"author": "Tree Xie <vicansocanbico@gmail.com>",
 	"keywords": [
 		"performance",
@@ -19,6 +19,7 @@
   "engines": {
     "node": ">=4.0.0"
   },
+  "readme": "Get nodejs performance, eg: heap statistics, event loop delay",
   "devDependencies": {
     "eslint": "^2.3.0",
     "istanbul": "^0.4.2",
