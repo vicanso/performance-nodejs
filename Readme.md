@@ -1,5 +1,7 @@
 # performance-nodejs
-  
+
+[![Build Status](https://travis-ci.org/vicanso/performance-nodejs.svg?branch=master)](https://travis-ci.org/vicanso/performance-nodejs)
+
   Get nodejs performance, eg: heap statistics, event loop delay
 
 ## Installation
