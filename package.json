@@ -1,7 +1,7 @@
 {
 	"name": "performance-nodejs",
 	"description": "get nodejs performance, eg: heap statistics, event loop delay",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"author": "Tree Xie <vicansocanbico@gmail.com>",
 	"keywords": [
 		"performance",
@@ -10,7 +10,7 @@
 		"event loop"
 	],
 	"scripts": {
-		"test": "node ./node_modules/.bin/eslint ./lib/*.js && node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./test/*.js --"
+		"test": "node ./node_modules/.bin/eslint ./index.js && node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./test/*.js --"
 	},
 	"repository": {
     "type": "git",
@@ -19,11 +19,12 @@
   "engines": {
     "node": ">=4.0.0"
   },
-  "readme": "Get nodejs performance, eg: heap statistics, event loop delay",
+  "readmeFilename": "Readme.md",
   "devDependencies": {
-    "eslint": "^2.5.1",
-    "eslint-config-airbnb": "^6.2.0",
-    "istanbul": "^0.4.2",
+    "eslint": "^2.9.0",
+    "eslint-config-airbnb": "^8.0.0",
+    "eslint-plugin-import": "^1.6.1",
+    "istanbul": "^0.4.3",
     "mocha": "^2.4.5"
   },
 	"license": "MIT"

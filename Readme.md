@@ -1,6 +1,10 @@
 # performance-nodejs
 
-[![Build Status](https://travis-ci.org/vicanso/performance-nodejs.svg?branch=master)](https://travis-ci.org/vicanso/performance-nodejs)
+
+[![Build Status](https://travis-ci.org/vicanso/performance-nodejs.svg?style=flat-square)](https://travis-ci.org/vicanso/performance-nodejs)
+[![Coverage Status](https://img.shields.io/coveralls/vicanso/performance-nodejs/master.svg?style=flat)](https://coveralls.io/r/vicanso/performance-nodejs?branch=master)
+[![npm](http://img.shields.io/npm/v/performance-nodejs.svg?style=flat-square)](https://www.npmjs.org/package/performance-nodejs)
+[![Github Releases](https://img.shields.io/npm/dm/performance-nodejs.svg?style=flat-square)](https://github.com/vicanso/performance-nodejs)
 
   Get nodejs performance, eg: heap statistics, event loop delay
 

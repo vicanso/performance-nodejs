@@ -14,9 +14,13 @@ describe('performance-nodejs', () => {
       assert(data.heap.total_available_size);
       assert(data.heap.used_heap_size);
       assert(data.heap.heap_size_limit);
-      timer.unref();
       done();
+      clearInterval(timer);
     });
-    timer.ref();
+  });
+
+  it('no callback', done => {
+    const timer = performance(10);
+    setTimeout(done, 200);
   });
 });
