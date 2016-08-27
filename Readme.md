@@ -38,7 +38,7 @@ Returns: A reference to the timer. Useful for clearing the timer.
 
 ```
 performance(data => {
-	// {"lag":5,"heap":{"total_heap_size":61160224,"total_heap_size_executable":7340032,"total_physical_size":61160224,"total_available_size":1477373760,"used_heap_size":32845320,"heap_size_limit":1535115264}}
+	// {"lag":5,"heap":{"total_heap_size":7.99609375,"total_heap_size_executable":5,"total_physical_size":7.99609375,"total_available_size":1422.0968933105469,"used_heap_size":3.84417724609375,"heap_size_limit":1464}}
 	console.info(JSON.stringify(data));
 }, 'MB', 100);
 ```
