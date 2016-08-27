@@ -6,13 +6,18 @@
 [![npm](http://img.shields.io/npm/v/performance-nodejs.svg?style=flat-square)](https://www.npmjs.org/package/performance-nodejs)
 [![Github Releases](https://img.shields.io/npm/dm/performance-nodejs.svg?style=flat-square)](https://github.com/vicanso/performance-nodejs)
 
-  Get nodejs performance, eg: heap statistics, event loop delay
+  Get nodejs performance, such as: heap statistics, event loop delay
 
 ## Installation
 
 ```
-$ npm install performance-nodejs
+$ npm i performance-nodejs
 ```
+
+## Examples
+  
+View the [./examples](examples) directory for working examples. 
+
 
 ## Description
 
@@ -26,6 +31,8 @@ const timer = performance(fn, interval);
 
 * interval: Check interval, defaulted to 100ms.
 
+* unit: Set the heap format unit, eg: 'B', 'MB', 'GB', defaulted to 'B'.
+
 Returns: A reference to the timer. Useful for clearing the timer. 
 
 
@@ -33,7 +40,7 @@ Returns: A reference to the timer. Useful for clearing the timer.
 performance(data => {
 	// {"lag":5,"heap":{"total_heap_size":61160224,"total_heap_size_executable":7340032,"total_physical_size":61160224,"total_available_size":1477373760,"used_heap_size":32845320,"heap_size_limit":1535115264}}
 	console.info(JSON.stringify(data));
-});
+}, 'MB', 100);
 ```
 
 # License
