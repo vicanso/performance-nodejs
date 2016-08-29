@@ -7,30 +7,33 @@ const performance = require('..');
 describe('performance-nodejs', () => {
   it('get performance success', done => {
     const timer = performance(data => {
+      console.dir(data);
       assert(util.isNumber(data.lag));
-      assert(data.heap.total_heap_size);
-      assert(data.heap.total_heap_size_executable);
-      assert(data.heap.total_physical_size);
-      assert(data.heap.total_available_size);
-      assert(data.heap.used_heap_size);
-      assert(data.heap.heap_size_limit);
+      const heapData = data.heap;
+      const keys = Object.keys(heapData);
+      keys.forEach(key => {
+        const v = heapData[key];
+        assert(v);
+        assert.equal(parseInt(v), v);
+      });
       done();
       clearInterval(timer);
     }, 'MB', 10);
   });
 
-  it('set heap unit GB success', done => {
+  it('set heap unit 0.00GB success', done => {
     const timer = performance(data => {
       assert(util.isNumber(data.lag));
-      assert(data.heap.total_heap_size);
-      assert(data.heap.total_heap_size_executable);
-      assert(data.heap.total_physical_size);
-      assert(data.heap.total_available_size);
-      assert(data.heap.used_heap_size);
-      assert(data.heap.heap_size_limit);
+      const heapData = data.heap;
+      const keys = Object.keys(heapData);
+      keys.forEach(key => {
+        const v = heapData[key];
+        assert(v);
+        assert.notEqual(parseInt(v), v);
+      });
       done();
       clearInterval(timer);
-    }, 'GB', 10);
+    }, '0.00GB', 10);
   });
 
   it('no callback', done => {

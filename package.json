@@ -1,7 +1,7 @@
 {
 	"name": "performance-nodejs",
 	"description": "get nodejs performance, such as: heap statistics, event loop delay",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": "Tree Xie <vicansocanbico@gmail.com>",
 	"keywords": [
 		"performance",

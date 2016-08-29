@@ -31,7 +31,7 @@ const timer = performance(fn, interval);
 
 * interval: Check interval, defaulted to 100ms.
 
-* unit: Set the heap format unit, eg: 'B', 'MB', 'GB', defaulted to 'B'.
+* unit: Set the heap format unit, eg: 'B', 'MB', 'GB', '0.0MB' defaulted to 'B'. `0.00MB` means set 2 precision and 'MB' unit.
 
 Returns: A reference to the timer. Useful for clearing the timer. 
 

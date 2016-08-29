@@ -12,18 +12,27 @@ function getDelay(start, interval) {
   return Math.max((nanosec / 1e6 | 0) - interval, 0);
 }
 
-function format(value, unit) {
-  if (unit === 'GB') {
-    return value / GB;
+function format(value, unitInfo) {
+  const unit = unitInfo.unit;
+  const precision = unitInfo.precision || 0;
+  let v = 0;
+  switch (unit) {
+    case 'GB':
+      v = value / GB;
+      break;
+    case 'MB':
+      v = value / MB;
+      break;
+    default:
+      v = value;
+      break;
   }
-  return value / MB;
+  v = parseFloat(Number(v).toFixed(precision));
+  return v;
 }
 
 function getHeapStatistics(unit) {
   const data = v8.getHeapStatistics();
-  if (unit === 'B') {
-    return data;
-  }
   const keys = Object.keys(data);
   const result = {};
   keys.forEach(key => {
@@ -42,17 +51,31 @@ function get(arr, filter, defaultValue) {
   return result || defaultValue;
 }
 
+function formatUnit(str) {
+  const reg = /\.\d*/;
+  const result = reg.exec(str);
+  if (result && result[0]) {
+    return {
+      precision: result[0].length - 1,
+      unit: str.substring(result[0].length + 1),
+    };
+  }
+  return {
+    unit: str,
+  };
+}
+
 function performance() {
   /* eslint prefer-rest-params: 0 */
   const args = Array.from(arguments);
   const interval = get(args, util.isNumber, 100);
   const fn = get(args, util.isFunction, noop);
-  const unit = get(args, util.isString, 'B').toUpperCase();
+  const unitInfo = formatUnit(get(args, util.isString, 'B').toUpperCase());
   let start = process.hrtime();
   return setInterval(() => {
     fn({
       lag: getDelay(start, interval),
-      heap: getHeapStatistics(unit),
+      heap: getHeapStatistics(unitInfo),
     });
     start = process.hrtime();
   }, interval).unref();
