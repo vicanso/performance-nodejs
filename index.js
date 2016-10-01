@@ -1,14 +1,17 @@
 'use strict';
+
 /* eslint import/no-unresolved: 0 */
 const v8 = require('v8');
 const util = require('util');
+
 const MB = 1024 * 1024;
 const GB = MB * 1204;
 function noop() {}
 
 function getDelay(start, interval) {
   const delta = process.hrtime(start);
-  const nanosec = delta[0] * 1e9 + delta[1];
+  const nanosec = (delta[0] * 1e9) + delta[1];
+  /* eslint no-bitwise: ["error", { "int32Hint": true }] */
   return Math.max((nanosec / 1e6 | 0) - interval, 0);
 }
 
@@ -35,7 +38,7 @@ function getHeapStatistics(unit) {
   const data = v8.getHeapStatistics();
   const keys = Object.keys(data);
   const result = {};
-  keys.forEach(key => {
+  keys.forEach((key) => {
     result[key] = format(data[key], unit);
   });
   return result;
@@ -43,7 +46,7 @@ function getHeapStatistics(unit) {
 
 function get(arr, filter, defaultValue) {
   let result;
-  arr.forEach(tmp => {
+  arr.forEach((tmp) => {
     if (tmp && filter(tmp)) {
       result = tmp;
     }

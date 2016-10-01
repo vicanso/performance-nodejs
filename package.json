@@ -1,18 +1,18 @@
 {
-	"name": "performance-nodejs",
-	"description": "get nodejs performance, such as: heap statistics, event loop delay",
-	"version": "1.0.1",
-	"author": "Tree Xie <vicansocanbico@gmail.com>",
-	"keywords": [
-		"performance",
-		"heap",
-		"heap statistics",
-		"event loop"
-	],
-	"scripts": {
-		"test": "node ./node_modules/.bin/eslint ./index.js && node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./test/*.js --"
-	},
-	"repository": {
+  "name": "performance-nodejs",
+  "description": "get nodejs performance, such as: heap statistics, event loop delay",
+  "version": "1.0.2",
+  "author": "Tree Xie <vicansocanbico@gmail.com>",
+  "keywords": [
+    "performance",
+    "heap",
+    "heap statistics",
+    "event loop"
+  ],
+  "scripts": {
+    "test": "node ./node_modules/.bin/eslint ./index.js && node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./test/*.js --"
+  },
+  "repository": {
     "type": "git",
     "url": "https://github.com/vicanso/performance-nodejs.git"
   },
@@ -21,11 +21,13 @@
   },
   "readmeFilename": "Readme.md",
   "devDependencies": {
-    "eslint": "^2.9.0",
-    "eslint-config-airbnb": "^8.0.0",
-    "eslint-plugin-import": "^1.6.1",
-    "istanbul": "^0.4.3",
-    "mocha": "^2.4.5"
+    "eslint": "^3.6.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.3.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^2.5.3"
   },
-	"license": "MIT"
+  "license": "MIT"
 }
