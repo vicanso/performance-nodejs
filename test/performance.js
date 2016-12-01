@@ -6,14 +6,13 @@ const performance = require('..');
 
 describe('performance-nodejs', () => {
   it('get performance success', done => {
-    const timer = performance(data => {
-      console.dir(data);
+    const timer = performance((data) => {
       assert(util.isNumber(data.lag));
       const heapData = data.heap;
       const keys = Object.keys(heapData);
-      keys.forEach(key => {
+      keys.forEach((key) => {
         const v = heapData[key];
-        assert(v);
+        assert(util.isNumber(v));
         assert.equal(parseInt(v), v);
       });
       done();
@@ -22,21 +21,27 @@ describe('performance-nodejs', () => {
   });
 
   it('set heap unit 0.00GB success', done => {
-    const timer = performance(data => {
+    const timer = performance((data) => {
       assert(util.isNumber(data.lag));
       const heapData = data.heap;
       const keys = Object.keys(heapData);
-      keys.forEach(key => {
+      keys.forEach((key) => {
         const v = heapData[key];
-        assert(v);
-        assert.notEqual(parseInt(v), v);
+        if (key === 'does_zap_garbage') {
+          assert.equal(v, 0);
+          return;
+        }
+        assert(util.isNumber(v));
+        if (key !== 'malloced_memory') {
+          assert.notEqual(parseInt(v), v);
+        }
       });
       done();
       clearInterval(timer);
-    }, '0.00GB', 10);
+    }, '0.000GB', 10);
   });
 
-  it('no callback', done => {
+  it('no callback', (done) => {
     const timer = performance(10);
     setTimeout(done, 200);
   });

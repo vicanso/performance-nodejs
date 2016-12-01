@@ -35,10 +35,11 @@ const timer = performance(fn, interval);
 
 Returns: A reference to the timer. Useful for clearing the timer. 
 
+`malloced_memory`, `peak_malloced_memory` and `does_zap_garbage` is new in node.js v7.x
 
 ```
 performance(data => {
-	// {"lag":5,"heap":{"total_heap_size":7.99609375,"total_heap_size_executable":5,"total_physical_size":7.99609375,"total_available_size":1422.0968933105469,"used_heap_size":3.84417724609375,"heap_size_limit":1464}}
+  // {"lag":3,"heap":{"total_heap_size":22,"total_heap_size_executable":6,"total_physical_size":22,"total_available_size":1407,"used_heap_size":15,"heap_size_limit":1432,"malloced_memory":0,"peak_malloced_memory":2,"does_zap_garbage":0}}
 	console.info(JSON.stringify(data));
 }, 'MB', 100);
 ```
