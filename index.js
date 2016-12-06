@@ -45,7 +45,7 @@ function getHeapStatistics(unit) {
 }
 
 function getHeapSpaceStatistics(unit) {
-  if (!v8.getHeapStatistics) {
+  if (!v8.getHeapSpaceStatistics) {
     return null;
   }
   const arr = v8.getHeapSpaceStatistics();
