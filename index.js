@@ -44,6 +44,26 @@ function getHeapStatistics(unit) {
   return result;
 }
 
+function getHeapSpaceStatistics(unit) {
+  if (!v8.getHeapStatistics) {
+    return null;
+  }
+  const arr = v8.getHeapSpaceStatistics();
+  const result = {};
+  arr.forEach((item) => {
+    const data = {};
+    const keys = Object.keys(item);
+    keys.forEach((key) => {
+      if (key === 'space_name') {
+        return;
+      }
+      data[key.replace('space_', '')] = format(item[key], unit);
+    });
+    result[item.space_name] = data;
+  });
+  return result;
+}
+
 function get(arr, filter, defaultValue) {
   let result;
   arr.forEach((tmp) => {
@@ -79,6 +99,7 @@ function performance() {
     fn({
       lag: getDelay(start, interval),
       heap: getHeapStatistics(unitInfo),
+      heapSpace: getHeapSpaceStatistics(unitInfo),
     });
     start = process.hrtime();
   }, interval).unref();

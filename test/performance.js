@@ -15,6 +15,16 @@ describe('performance-nodejs', () => {
         assert(util.isNumber(v));
         assert.equal(parseInt(v), v);
       });
+      const heapSpace = data.heapSpace;
+      if (heapSpace) {
+        const spaceTypeList = 'new_space old_space code_space map_space'.split(' ');
+        const heapSpaceKeys = 'size used_size available_size physical_size'.split(' ');
+        spaceTypeList.forEach((type) => {
+          heapSpaceKeys.forEach((key) => {
+            assert(util.isNumber(heapSpace[type][key]));
+          });
+        });
+      }
       done();
       clearInterval(timer);
     }, 'MB', 10);

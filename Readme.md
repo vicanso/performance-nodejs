@@ -21,7 +21,9 @@ View the [./examples](examples) directory for working examples.
 
 ## Description
 
-  The `performance()` function get node.js performance (include event loop and heap statistics). 
+  The `performance()` function get node.js performance (include event loop, heap statistics and heap space statistics). 
+
+  * If node.js support v8.getHeapSpaceStatistics(), the heap space will be return.
 
 ```
 const timer = performance(fn, interval);
@@ -39,7 +41,6 @@ Returns: A reference to the timer. Useful for clearing the timer.
 
 ```
 performance(data => {
-  // {"lag":3,"heap":{"total_heap_size":22,"total_heap_size_executable":6,"total_physical_size":22,"total_available_size":1407,"used_heap_size":15,"heap_size_limit":1432,"malloced_memory":0,"peak_malloced_memory":2,"does_zap_garbage":0}}
 	console.info(JSON.stringify(data));
 }, 'MB', 100);
 ```
