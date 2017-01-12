@@ -37,7 +37,66 @@ const timer = performance(fn, interval);
 
 Returns: A reference to the timer. Useful for clearing the timer. 
 
+
+`cpuUsage` is new in node.js v6.x.
+
 `malloced_memory`, `peak_malloced_memory` and `does_zap_garbage` is new in node.js v7.x
+
+```json
+// node.js performance
+{
+  "lag": 0,
+  "heap": {
+    "total_heap_size": 7,
+    "total_heap_size_executable": 5,
+    "total_physical_size": 7,
+    "total_available_size": 1421,
+    "used_heap_size": 3,
+    "heap_size_limit": 1432,
+    "malloced_memory": 0,
+    "peak_malloced_memory": 1,
+    "does_zap_garbage": 0
+  },
+  "heapSpace": {
+    "new_space": {
+      "size": 2,
+      "used_size": 1,
+      "available_size": 0,
+      "physical_size": 2
+    },
+    "old_space": {
+      "size": 2,
+      "used_size": 1,
+      "available_size": 0,
+      "physical_size": 2
+    },
+    "code_space": {
+      "size": 2,
+      "used_size": 1,
+      "available_size": 0,
+      "physical_size": 2
+    },
+    "map_space": {
+      "size": 1,
+      "used_size": 0,
+      "available_size": 0,
+      "physical_size": 1
+    },
+    "large_object_space": {
+      "size": 0,
+      "used_size": 0,
+      "available_size": 1421,
+      "physical_size": 0
+    }
+  },
+  "cpuUsage": {
+    "user": 1966,
+    "system": 185,
+    "usedPercent": 1,
+    "total": 474737
+  }
+}
+```
 
 ```
 performance(data => {
