@@ -88,6 +88,19 @@ function formatUnit(str) {
   };
 }
 
+function getCpuUsage(previousValue, start) {
+  if (!previousValue) {
+    return null;
+  }
+  const usage = process.cpuUsage(previousValue);
+  const delta = process.hrtime(start);
+  const total = Math.ceil(((delta[0] * 1e9) + delta[1]) / 1000);
+  const usedPercent = Math.ceil(((usage.user + usage.system) / total) * 100);
+  usage.usedPercent = usedPercent;
+  usage.total = total;
+  return usage;
+}
+
 function performance() {
   /* eslint prefer-rest-params: 0 */
   const args = Array.from(arguments);
@@ -95,13 +108,16 @@ function performance() {
   const fn = get(args, util.isFunction, noop);
   const unitInfo = formatUnit(get(args, util.isString, 'B').toUpperCase());
   let start = process.hrtime();
+  let cpuUsage = process.cpuUsage && process.cpuUsage();
   return setInterval(() => {
     fn({
       lag: getDelay(start, interval),
       heap: getHeapStatistics(unitInfo),
       heapSpace: getHeapSpaceStatistics(unitInfo),
+      cpuUsage: getCpuUsage(cpuUsage, start),
     });
     start = process.hrtime();
+    cpuUsage = process.cpuUsage && process.cpuUsage();
   }, interval).unref();
 }
 

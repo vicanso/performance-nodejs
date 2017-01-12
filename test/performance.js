@@ -25,6 +25,11 @@ describe('performance-nodejs', () => {
           });
         });
       }
+      const cpuUsage = data.cpuUsage;
+      if (cpuUsage) {
+        const usageKeys = 'user system usedPercent total'.split(' ');
+        usageKeys.forEach(key => assert(util.isNumber(cpuUsage[key])));
+      }
       done();
       clearInterval(timer);
     }, 'MB', 10);
