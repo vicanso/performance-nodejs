@@ -13,7 +13,7 @@ describe('performance-nodejs', () => {
       keys.forEach((key) => {
         const v = heapData[key];
         assert(util.isNumber(v));
-        assert.equal(parseInt(v), v);
+        assert.equal(parseInt(v, 10), v);
       });
       const heapSpace = data.heapSpace;
       if (heapSpace) {
@@ -30,6 +30,13 @@ describe('performance-nodejs', () => {
         const usageKeys = 'user system usedPercent total'.split(' ');
         usageKeys.forEach(key => assert(util.isNumber(cpuUsage[key])));
       }
+
+      const memoryUsage = data.memoryUsage;
+      Object.keys(memoryUsage).forEach((key) => {
+        const v = memoryUsage[key];
+        assert(util.isNumber(v));
+        assert.equal(parseInt(v, 10), v);
+      });
       done();
       clearInterval(timer);
     }, 'MB', 10);

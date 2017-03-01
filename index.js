@@ -64,6 +64,16 @@ function getHeapSpaceStatistics(unit) {
   return result;
 }
 
+function getMemoryUsage(unit) {
+  const data = process.memoryUsage();
+  const keys = Object.keys(data);
+  const result = {};
+  keys.forEach((key) => {
+    result[key] = format(data[key], unit);
+  });
+  return result;
+}
+
 function get(arr, filter, defaultValue) {
   let result;
   arr.forEach((tmp) => {
@@ -115,6 +125,7 @@ function performance() {
       heap: getHeapStatistics(unitInfo),
       heapSpace: getHeapSpaceStatistics(unitInfo),
       cpuUsage: getCpuUsage(cpuUsage, start),
+      memoryUsage: getMemoryUsage(unitInfo),
     });
     start = process.hrtime();
     cpuUsage = process.cpuUsage && process.cpuUsage();
