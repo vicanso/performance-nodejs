@@ -2,11 +2,22 @@
 
 /* eslint import/no-unresolved: 0 */
 const v8 = require('v8');
-const util = require('util');
 
 const MB = 1024 * 1024;
 const GB = MB * 1204;
 function noop() {}
+
+function isFunction(value) {
+  return typeof value === 'function';
+}
+
+function isNumber(value) {
+  return typeof value === 'number';
+}
+
+function isString(value) {
+  return typeof value === 'string';
+}
 
 function getDelay(start, interval) {
   const delta = process.hrtime(start);
@@ -114,9 +125,9 @@ function getCpuUsage(previousValue, start) {
 function performance() {
   /* eslint prefer-rest-params: 0 */
   const args = Array.from(arguments);
-  const interval = get(args, util.isNumber, 100);
-  const fn = get(args, util.isFunction, noop);
-  const unitInfo = formatUnit(get(args, util.isString, 'B').toUpperCase());
+  const interval = get(args, isNumber, 100);
+  const fn = get(args, isFunction, noop);
+  const unitInfo = formatUnit(get(args, isString, 'B').toUpperCase());
   let start = process.hrtime();
   let cpuUsage = process.cpuUsage && process.cpuUsage();
   return setInterval(() => {
