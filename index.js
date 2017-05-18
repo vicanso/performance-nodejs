@@ -19,6 +19,12 @@ function isString(value) {
   return typeof value === 'string';
 }
 
+/**
+ * Get the dalay of interval
+ * @param {Array} start The start time
+ * @param {Number} interval The value of interval, ms
+ * @returns {Number} The dalay ms
+ */
 function getDelay(start, interval) {
   const delta = process.hrtime(start);
   const nanosec = (delta[0] * 1e9) + delta[1];
@@ -26,6 +32,14 @@ function getDelay(start, interval) {
   return Math.max((nanosec / 1e6 | 0) - interval, 0);
 }
 
+/**
+ * Format the bytes by unit
+ * @param {Number} value Bytes count
+ * @param {Object} unitInfo {unit: String, precision: Number}
+ * unit: 'GB', 'MB' or 'B'
+ * precision: the precision of size, default is 0
+ * @returns {Number}
+ */
 function format(value, unitInfo) {
   const unit = unitInfo.unit;
   const precision = unitInfo.precision || 0;
@@ -45,17 +59,27 @@ function format(value, unitInfo) {
   return v;
 }
 
-function getHeapStatistics(unit) {
+/**
+ * Get the heap statistics
+ * @param {Object} unitInfo The unit format setting
+ * @returns {Object} The heap statistics
+ */
+function getHeapStatistics(unitInfo) {
   const data = v8.getHeapStatistics();
   const keys = Object.keys(data);
   const result = {};
   keys.forEach((key) => {
-    result[key] = format(data[key], unit);
+    result[key] = format(data[key], unitInfo);
   });
   return result;
 }
 
-function getHeapSpaceStatistics(unit) {
+/**
+ * Get the heap space statistics
+ * @param {Object} unitInfo The unit format setting
+ * @returns {Object} The heap space statistics
+ */
+function getHeapSpaceStatistics(unitInfo) {
   if (!v8.getHeapSpaceStatistics) {
     return null;
   }
@@ -68,23 +92,36 @@ function getHeapSpaceStatistics(unit) {
       if (key === 'space_name') {
         return;
       }
-      data[key.replace('space_', '')] = format(item[key], unit);
+      // replace the space_ key prefix
+      data[key.replace('space_', '')] = format(item[key], unitInfo);
     });
     result[item.space_name] = data;
   });
   return result;
 }
 
-function getMemoryUsage(unit) {
+/**
+ * Get the memory usage
+ * @param {Object} unitInfo The unit format setting
+ * @returns {Object} The memory usage
+ */
+function getMemoryUsage(unitInfo) {
   const data = process.memoryUsage();
   const keys = Object.keys(data);
   const result = {};
   keys.forEach((key) => {
-    result[key] = format(data[key], unit);
+    result[key] = format(data[key], unitInfo);
   });
   return result;
 }
 
+/**
+ * Get the value from array by filter
+ * @param {Array} arr The array to filter
+ * @param {Function} filter The filter function
+ * @param {any} defaultValue The default value for no value is valid
+ * @returns {any} The value of filter
+ */
 function get(arr, filter, defaultValue) {
   let result;
   arr.forEach((tmp) => {
@@ -95,7 +132,12 @@ function get(arr, filter, defaultValue) {
   return result || defaultValue;
 }
 
-function formatUnit(str) {
+/**
+ * Convert the unit info
+ * @param {String} str The unit info
+ * @returns {Object} The format unit info
+ */
+function convertUnit(str) {
   const reg = /\.\d*/;
   const result = reg.exec(str);
   if (result && result[0]) {
@@ -109,6 +151,19 @@ function formatUnit(str) {
   };
 }
 
+/**
+ * Get the cpu usage
+ * @param {Object} previousValue The previous cpu usage
+ * @param {Array} start The previous process.hrtime
+ * @returns {Object} The cpu usage {
+ *  user: Number,
+ *  system: Number,
+ *  usedPercent: Number,
+ *  userUsedPercent: Number,
+ *  systemUsedPercent: Number,
+ *  total: total
+ * }
+ */
 function getCpuUsage(previousValue, start) {
   if (!previousValue) {
     return null;
@@ -116,18 +171,26 @@ function getCpuUsage(previousValue, start) {
   const usage = process.cpuUsage(previousValue);
   const delta = process.hrtime(start);
   const total = Math.ceil(((delta[0] * 1e9) + delta[1]) / 1000);
-  const usedPercent = Math.ceil(((usage.user + usage.system) / total) * 100);
+  const usedPercent = Math.round(((usage.user + usage.system) / total) * 100);
   usage.usedPercent = usedPercent;
+  usage.userUsedPercent = Math.round((usage.use / total) * 100);
+  usage.systemUsedPercent = Math.round((usage.system / total) * 100);
   usage.total = total;
   return usage;
 }
 
+/**
+ * Get the performance of node, include lag, heap, heapSpace, cpuUsage, memoryUsage
+ * @param {Function} fn The callback function of performance
+ * @param {Interval} interval The interval of get performance
+ * @returns {Timer} The setInterval timer
+ */
 function performance() {
   /* eslint prefer-rest-params: 0 */
   const args = Array.from(arguments);
   const interval = get(args, isNumber, 100);
   const fn = get(args, isFunction, noop);
-  const unitInfo = formatUnit(get(args, isString, 'B').toUpperCase());
+  const unitInfo = convertUnit(get(args, isString, 'B').toUpperCase());
   let start = process.hrtime();
   let cpuUsage = process.cpuUsage && process.cpuUsage();
   return setInterval(() => {

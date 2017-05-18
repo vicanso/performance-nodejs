@@ -27,7 +27,7 @@ describe('performance-nodejs', () => {
       }
       const cpuUsage = data.cpuUsage;
       if (cpuUsage) {
-        const usageKeys = 'user system usedPercent total'.split(' ');
+        const usageKeys = 'user system usedPercent userUsedPercent systemUsedPercent total'.split(' ');
         usageKeys.forEach(key => assert(util.isNumber(cpuUsage[key])));
       }
 
