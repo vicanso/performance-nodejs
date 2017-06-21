@@ -173,7 +173,7 @@ function getCpuUsage(previousValue, start) {
   const total = Math.ceil(((delta[0] * 1e9) + delta[1]) / 1000);
   const usedPercent = Math.round(((usage.user + usage.system) / total) * 100);
   usage.usedPercent = usedPercent;
-  usage.userUsedPercent = Math.round((usage.use / total) * 100);
+  usage.userUsedPercent = Math.round((usage.user / total) * 100);
   usage.systemUsedPercent = Math.round((usage.system / total) * 100);
   usage.total = total;
   return usage;
