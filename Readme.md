@@ -47,11 +47,11 @@ Returns: A reference to the timer. Useful for clearing the timer.
 {
   "lag": 0,
   "heap": {
-    "total_heap_size": 7,
-    "total_heap_size_executable": 5,
-    "total_physical_size": 7,
-    "total_available_size": 1421,
-    "used_heap_size": 3,
+    "total_heap_size": 6,
+    "total_heap_size_executable": 4,
+    "total_physical_size": 6,
+    "total_available_size": 1423,
+    "used_heap_size": 4,
     "heap_size_limit": 1432,
     "malloced_memory": 0,
     "peak_malloced_memory": 1,
@@ -60,13 +60,13 @@ Returns: A reference to the timer. Useful for clearing the timer.
   "heapSpace": {
     "new_space": {
       "size": 2,
-      "used_size": 1,
-      "available_size": 0,
+      "used_size": 0,
+      "available_size": 1,
       "physical_size": 2
     },
     "old_space": {
       "size": 2,
-      "used_size": 1,
+      "used_size": 2,
       "available_size": 0,
       "physical_size": 2
     },
@@ -74,30 +74,32 @@ Returns: A reference to the timer. Useful for clearing the timer.
       "size": 2,
       "used_size": 1,
       "available_size": 0,
-      "physical_size": 2
+      "physical_size": 1
     },
     "map_space": {
       "size": 1,
       "used_size": 0,
       "available_size": 0,
-      "physical_size": 1
+      "physical_size": 0
     },
     "large_object_space": {
       "size": 0,
       "used_size": 0,
-      "available_size": 1421,
+      "available_size": 1422,
       "physical_size": 0
     }
   },
   "cpuUsage": {
-    "user": 1966,
-    "system": 185,
-    "usedPercent": 1,
-    "total": 474737
+    "user": 1344,
+    "system": 197,
+    "usedPercent": 0,
+    "userUsedPercent": 0,
+    "systemUsedPercent": 0,
+    "total": 477549
   },
   "memoryUsage": {
-    "rss": 20,
-    "heapTotal": 5,
+    "rss": 23,
+    "heapTotal": 6,
     "heapUsed": 4,
     "external": 0
   }
