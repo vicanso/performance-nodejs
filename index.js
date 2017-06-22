@@ -2,6 +2,7 @@
 
 /* eslint import/no-unresolved: 0 */
 const v8 = require('v8');
+const camelCase = require('camelcase');
 
 const MB = 1024 * 1024;
 const GB = MB * 1204;
@@ -17,6 +18,11 @@ function isNumber(value) {
 
 function isString(value) {
   return typeof value === 'string';
+}
+
+function isObject(value) {
+  const type = typeof value;
+  return value != null && type === 'object';
 }
 
 /**
@@ -179,6 +185,22 @@ function getCpuUsage(previousValue, start) {
   return usage;
 }
 
+
+function camelCaseData(data) {
+  const result = {};
+  const keys = Object.keys(data);
+  keys.forEach((k) => {
+    const key = camelCase(k);
+    const value = data[k];
+    if (isObject(value)) {
+      result[key] = camelCaseData(value);
+    } else {
+      result[key] = value;
+    }
+  });
+  return result;
+}
+
 /**
  * Get the performance of node, include lag, heap, heapSpace, cpuUsage, memoryUsage
  * @param {Function} fn The callback function of performance
@@ -194,17 +216,25 @@ function performance() {
   let start = process.hrtime();
   let cpuUsage = process.cpuUsage && process.cpuUsage();
   return setInterval(() => {
-    fn({
+    const result = {
       lag: getDelay(start, interval),
       heap: getHeapStatistics(unitInfo),
       heapSpace: getHeapSpaceStatistics(unitInfo),
       cpuUsage: getCpuUsage(cpuUsage, start),
       memoryUsage: getMemoryUsage(unitInfo),
-    });
+    };
+    if (!performance.camelCase) {
+      fn(result);
+    } else {
+      const camelCaseResult = camelCaseData(result);
+      fn(camelCaseResult);
+    }
     start = process.hrtime();
     cpuUsage = process.cpuUsage && process.cpuUsage();
   }, interval).unref();
 }
+
+performance.camelCase = false;
 
 
 module.exports = performance;

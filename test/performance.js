@@ -63,6 +63,15 @@ describe('performance-nodejs', () => {
     }, '0.000GB', 10);
   });
 
+  it('set camelCase success', done => {
+    performance.camelCase = true;
+    const timer = performance((data) => {
+      assert(data.heap.totalHeapSize);
+      done();
+      clearInterval(timer);
+    }, 10);
+  });
+
   it('no callback', (done) => {
     const timer = performance(10);
     setTimeout(done, 200);
