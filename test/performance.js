@@ -76,7 +76,6 @@ describe('performance-nodejs', () => {
     performance.camelCase = true;
     performance.flatten = true;
     const timer = performance((data) => {
-      console.dir(JSON.stringify(data));
       assert(data.cpuUsageUser);
       assert(data.memoryUsageRss);
       done();

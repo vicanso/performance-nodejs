@@ -212,7 +212,8 @@ function camelCaseData(data) {
  * @param {Object} data
  * @returns
  */
-function flatten(data, prefix = '') {
+function flatten(data, pre) {
+  const prefix = pre || '';
   const keys = Object.keys(data);
   const result = {};
   keys.forEach((k) => {
