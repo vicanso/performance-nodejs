@@ -185,7 +185,12 @@ function getCpuUsage(previousValue, start) {
   return usage;
 }
 
-
+/**
+ * Convert the data to camel case
+ *
+ * @param {Object} data
+ * @returns
+ */
 function camelCaseData(data) {
   const result = {};
   const keys = Object.keys(data);
@@ -194,6 +199,27 @@ function camelCaseData(data) {
     const value = data[k];
     if (isObject(value)) {
       result[key] = camelCaseData(value);
+    } else {
+      result[key] = value;
+    }
+  });
+  return result;
+}
+
+/**
+ * Flatten the data
+ *
+ * @param {Object} data
+ * @returns
+ */
+function flatten(data, prefix = '') {
+  const keys = Object.keys(data);
+  const result = {};
+  keys.forEach((k) => {
+    const value = data[k];
+    const key = [prefix, k].join('-');
+    if (isObject(value)) {
+      Object.assign(result, flatten(value, key));
     } else {
       result[key] = value;
     }
@@ -216,19 +242,20 @@ function performance() {
   let start = process.hrtime();
   let cpuUsage = process.cpuUsage && process.cpuUsage();
   return setInterval(() => {
-    const result = {
+    let result = {
       lag: getDelay(start, interval),
       heap: getHeapStatistics(unitInfo),
       heapSpace: getHeapSpaceStatistics(unitInfo),
       cpuUsage: getCpuUsage(cpuUsage, start),
       memoryUsage: getMemoryUsage(unitInfo),
     };
-    if (!performance.camelCase) {
-      fn(result);
-    } else {
-      const camelCaseResult = camelCaseData(result);
-      fn(camelCaseResult);
+    if (performance.flatten) {
+      result = flatten(result);
     }
+    if (performance.camelCase) {
+      result = camelCaseData(result);
+    }
+    fn(result);
     start = process.hrtime();
     cpuUsage = process.cpuUsage && process.cpuUsage();
   }, interval).unref();
@@ -236,5 +263,6 @@ function performance() {
 
 performance.camelCase = false;
 
+performance.flatten = false;
 
 module.exports = performance;

@@ -5,7 +5,7 @@ const performance = require('..');
 
 
 describe('performance-nodejs', () => {
-  it('get performance success', done => {
+  it('get performance success', (done) => {
     const timer = performance((data) => {
       assert(util.isNumber(data.lag));
       const heapData = data.heap;
@@ -42,7 +42,7 @@ describe('performance-nodejs', () => {
     }, 'MB', 10);
   });
 
-  it('set heap unit 0.00GB success', done => {
+  it('set heap unit 0.00GB success', (done) => {
     const timer = performance((data) => {
       assert(util.isNumber(data.lag));
       const heapData = data.heap;
@@ -55,7 +55,7 @@ describe('performance-nodejs', () => {
         }
         assert(util.isNumber(v));
         if (key !== 'malloced_memory') {
-          assert.notEqual(parseInt(v), v);
+          assert.notEqual(parseInt(v, 10), v);
         }
       });
       done();
@@ -63,7 +63,7 @@ describe('performance-nodejs', () => {
     }, '0.000GB', 10);
   });
 
-  it('set camelCase success', done => {
+  it('set camelCase success', (done) => {
     performance.camelCase = true;
     const timer = performance((data) => {
       assert(data.heap.totalHeapSize);
@@ -72,8 +72,23 @@ describe('performance-nodejs', () => {
     }, 10);
   });
 
+  it('set flatten success', (done) => {
+    performance.camelCase = true;
+    performance.flatten = true;
+    const timer = performance((data) => {
+      console.dir(JSON.stringify(data));
+      assert(data.cpuUsageUser);
+      assert(data.memoryUsageRss);
+      done();
+      clearInterval(timer);
+    }, 10);
+  });
+
   it('no callback', (done) => {
     const timer = performance(10);
-    setTimeout(done, 200);
+    setTimeout(() => {
+      clearInterval(timer);
+      done();
+    }, 200);
   });
 });

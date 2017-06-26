@@ -114,13 +114,27 @@ performance((data) => {
 
 ### camelCase
 
-Set the result is convert to camelCase
+Convert the result to camelCase
 
 ```js
 const performance = require('performance-nodejs');
 performance.camelCase = true;
 performance((data) => {
   // {"lag":4,"heap":{"totalHeapSize":6,"totalHeapSizeExecutable":4,"totalPhysicalSize":5 ...
+	console.info(JSON.stringify(data));
+}, 'MB', 100);
+```
+
+### flatten
+
+Flatten the result
+
+```js
+const performance = require('performance-nodejs');
+performance.camelCase = true;
+performance.flatten = true;
+performance((data) => {
+  // {"lag":1,"heapTotalHeapSize":34639872,"heapTotalHeapSizeExecutable":5767168,"heapTotalPhysicalSize": ...
 	console.info(JSON.stringify(data));
 }, 'MB', 100);
 ```
