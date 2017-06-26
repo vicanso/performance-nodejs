@@ -1,3 +1,10 @@
+# 1.1.2
+  * Support camelCase mode
+  * Support flatten mode
+
+# 1.1.1
+  * Fix get userUsedPercent of cpuUsage is NaN
+
 # 1.1.0
   * Add user used percent and system used percent for cpuUsage
 
