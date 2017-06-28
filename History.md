@@ -1,3 +1,6 @@
+# 1.1.3
+  * Remove `null` value of performance
+
 # 1.1.2
   * Support camelCase mode
   * Support flatten mode
