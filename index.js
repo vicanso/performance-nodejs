@@ -86,9 +86,6 @@ function getHeapStatistics(unitInfo) {
  * @returns {Object} The heap space statistics
  */
 function getHeapSpaceStatistics(unitInfo) {
-  if (!v8.getHeapSpaceStatistics) {
-    return null;
-  }
   const arr = v8.getHeapSpaceStatistics();
   const result = {};
   arr.forEach((item) => {
@@ -242,14 +239,18 @@ function performance() {
   const unitInfo = convertUnit(get(args, isString, 'B').toUpperCase());
   let start = process.hrtime();
   let cpuUsage = process.cpuUsage && process.cpuUsage();
-  return setInterval(() => {
+  const timer = setInterval(() => {
     let result = {
       lag: getDelay(start, interval),
       heap: getHeapStatistics(unitInfo),
-      heapSpace: getHeapSpaceStatistics(unitInfo),
-      cpuUsage: getCpuUsage(cpuUsage, start),
       memoryUsage: getMemoryUsage(unitInfo),
     };
+    if (cpuUsage) {
+      result.cpuUsage = getCpuUsage(cpuUsage, start);
+    }
+    if (v8.getHeapSpaceStatistics) {
+      result.heapSpace = getHeapSpaceStatistics(unitInfo);
+    }
     if (performance.flatten) {
       result = flatten(result);
     }
@@ -259,7 +260,9 @@ function performance() {
     fn(result);
     start = process.hrtime();
     cpuUsage = process.cpuUsage && process.cpuUsage();
-  }, interval).unref();
+  }, interval);
+  timer.unref();
+  return timer;
 }
 
 performance.camelCase = false;
